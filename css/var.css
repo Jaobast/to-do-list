@@ -1,0 +1,19 @@
+/* 'Rajdhani' */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+
+/* 'Cutive Mono' */
+@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
+
+
+:root{
+
+    --purple: rgb(190, 143, 217);
+    --purple-dark: rgb(133, 97, 154);
+    --purple-light: rgb(212, 181, 230);
+    --orange: rgb(249, 127, 90);
+    --green: rgb(139, 171, 106);
+    --black: #333;
+
+    --line: /* 1px solid var(--orange) */ none;
+}

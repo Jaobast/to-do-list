@@ -1,0 +1,192 @@
+/* Geral */
+
+*{
+    padding: 0; margin: 0;
+    font-family: 'Rajdhani';
+    color: var(--black);
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--purple);
+}
+
+button{
+    background-color: var(--purple); color: var(--black);
+    font-weight: bolder;
+    border: none; border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+    font-size: 1rem;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center; align-items: center;
+    transition: 0.4s;
+}
+
+button i{ font-weight: bolder; pointer-events: none;}
+
+button:hover{ background-color: var(--orange); color: white;}
+
+button:hover > i{ color: white;}
+
+input, select{
+    padding: 0.25rem 0.5rem;
+    background-color: var(--purple-light);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600; font-size: 0.8rem;
+}
+
+input::placeholder, select{
+    color: var(--purple-dark);
+}
+
+.hide{ display: none!important;}
+
+
+
+
+/* To do header */
+
+.todo-container{
+    max-width: 450px;
+    background-color: white;
+    margin: 5rem auto 0; padding: 1.5rem 1.5rem 3rem;
+    border-radius: 32px;
+
+    & header{
+        text-align: center;
+        padding: 0 1rem 1rem;
+        border-bottom: var(--line);
+    }
+}
+
+@media (max-width: 500px) {
+    .todo-container {
+        max-width: 90vw;
+        margin: 2rem auto 0;
+    }
+}
+
+/* To do form */
+
+#todo-form, #edit-form{
+    padding: 1rem;
+    border-bottom: var(--line);
+
+    & p{
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+}
+
+.form-control{
+    display: flex;
+
+    & input{
+        margin-right: 0.3rem;
+    }
+}
+
+#cancel-edit-btn{
+    margin-top: 1rem;
+}
+
+/* To do toolbar */
+
+#toolbar{
+    padding: 1rem;
+    border-bottom: var(--line);
+    display: flex;
+
+    & h4{ margin-bottom: 0.5rem;}
+}
+
+#search{
+    border-right: var(--line);
+    padding-right: 1rem; margin-right: 1rem;
+    width: 65%;
+
+    display: flex; flex-direction: column;
+
+    & form{ display: flex;}
+
+    & input{
+        width: 100%;
+        margin-right: 0.3rem;
+    }
+}
+
+#filter{
+    width: 35%;
+    display: flex; flex-direction: column;
+
+    & select{
+        flex: 1;
+    }
+}
+
+select {
+    appearance: none;  -webkit-appearance: none; -moz-appearance: none;
+    cursor: pointer;
+
+    background-image: url('/assets/arrrow-down.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+select:hover{
+    background-color: var(--orange);
+    color: white;
+    background-image: url('/assets/arrrow-down-white.svg');
+}
+  
+select:focus, input[type="text"] {
+    outline: none;
+}
+
+/* To do list */
+.todo{
+    display: flex;
+    justify-content: space-around; align-items: center;
+    padding: 1rem;
+    border-bottom: var(--line);
+    transition: 0.3s;
+
+    & h3{
+        flex: 1;
+        font-size: 0.8rem; font-family: 'Cutive Mono'; font-weight: 500;
+    }
+
+    & button{
+        margin-left: 0.4rem;
+    }
+}
+
+.done{
+    background-color: var(--orange);
+    border-radius: 8px;
+
+    & h3{
+        text-decoration: line-through;
+        font-style: italic;
+    }
+
+    & button{
+        background-color: white;
+        
+        & i{
+            color: var(--orange);
+        }
+    }
+
+    & button:hover{
+        background-color: var(--orange);
+        
+        & i{
+            color: white;
+        }
+    }
+}

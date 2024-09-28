@@ -8,10 +8,10 @@
 
 :root{
 
-    --purple: rgb(190, 143, 217);
-    --purple-dark: rgb(133, 97, 154);
-    --purple-light: rgb(212, 181, 230);
-    --orange: rgb(249, 127, 90);
+    --color: rgb(190, 143, 217);
+    --color-dark: rgb(133, 97, 154);
+    --color-light: rgb(212, 181, 230);
+    --color-contrast: rgb(249, 127, 90);
     --green: rgb(139, 171, 106);
     --black: #333;
 

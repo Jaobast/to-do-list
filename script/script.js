@@ -106,7 +106,7 @@ todoForm.addEventListener("submit", (e) => {
 });
 
 /* Botoes no to do */
-document.addEventListener("click", (e) => {
+document.addEventListener("pointerup", (e) => {
     const targetEl = e.target;
     const parentEl = targetEl.closest("div");
 
@@ -127,6 +127,7 @@ document.addEventListener("click", (e) => {
         if (index !== -1) {
             myList.splice(index, 1);
             localStorage.setItem('list', JSON.stringify(myList));
+            console.log(todoTitle + "foi removido");
         }
     }
 
@@ -136,8 +137,8 @@ document.addEventListener("click", (e) => {
         editInput.value = todoTitle;
         oldInputValue = todoTitle;
     }
-
 });
+
 
 
 cancelEditBtn.addEventListener("click", (e) => {

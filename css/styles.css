@@ -8,11 +8,15 @@
 }
 
 body{
-    background-color: var(--purple);
+    background-color: var(--color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: -webkit-fill-available;
 }
 
 button{
-    background-color: var(--purple); color: var(--black);
+    background-color: var(--color); color: var(--black);
     font-weight: bolder;
     border: none; border-radius: 4px;
     padding: 0.3rem 0.6rem;
@@ -26,20 +30,20 @@ button{
 
 button i{ font-weight: bolder; pointer-events: none;}
 
-button:hover{ background-color: var(--orange); color: white;}
+button:hover{ background-color: var(--color-contrast); color: white;}
 
 button:hover > i{ color: white;}
 
 input, select{
     padding: 0.25rem 0.5rem;
-    background-color: var(--purple-light);
+    background-color: var(--color-light);
     border: none;
     border-radius: 4px;
     font-weight: 600; font-size: 0.8rem;
 }
 
 input::placeholder, select{
-    color: var(--purple-dark);
+    color: var(--color-dark);
 }
 
 .hide{ display: none!important;}
@@ -50,10 +54,11 @@ input::placeholder, select{
 /* To do header */
 
 .todo-container{
-    max-width: 450px;
+    width: 450px;
     background-color: white;
     margin: 5rem auto 0; padding: 1.5rem 1.5rem 3rem;
     border-radius: 32px;
+    
 
     & header{
         text-align: center;
@@ -67,6 +72,8 @@ input::placeholder, select{
         max-width: 90vw;
         margin: 2rem auto 0;
     }
+
+    #change-color{ max-width: 90vw;}
 }
 
 /* To do form */
@@ -138,7 +145,7 @@ select {
 }
 
 select:hover{
-    background-color: var(--orange);
+    background-color: var(--color-contrast);
     color: white;
     background-image: url('/assets/arrrow-down-white.svg');
 }
@@ -166,7 +173,7 @@ select:focus, input[type="text"] {
 }
 
 .done{
-    background-color: var(--orange);
+    background-color: var(--color-contrast);
     border-radius: 8px;
 
     & h3{
@@ -178,12 +185,12 @@ select:focus, input[type="text"] {
         background-color: white;
         
         & i{
-            color: var(--orange);
+            color: var(--color-contrast);
         }
     }
 
     & button:hover{
-        background-color: var(--orange);
+        background-color: var(--color-contrast);
         
         & i{
             color: white;

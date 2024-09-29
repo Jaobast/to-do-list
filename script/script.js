@@ -1,164 +1,106 @@
-// Seleção de elementos
-const todoForm = document.querySelector("#todo-form");
-const todoInput = document.querySelector("#todo-input");
-const todoList = document.querySelector("#todo-list");
-const editForm = document.querySelector("#edit-form");
-const editInput = document.querySelector("#edit-input");
-const cancelEditBtn = document.querySelector("#cancel-edit-btn");
-const toolbar = document.querySelector("#toolbar");
+const button = document.querySelector('#todo-form button');
+const input = document.querySelector('#todo-form input');
+const buttonEdit = document.querySelector('#edit-form button');
+const inputEdit = document.querySelector('#edit-form input');
+const toDoListContainer = document.getElementById('todo-list');
 
-let oldInputValue;
+const editForm = document.querySelector("#edit-form");
+const todoForm = document.querySelector("#todo-form");
+const toolbar = document.querySelector("#toolbar");
+const cancelBtn = document.querySelector("#cancel-edit-btn");
+
 let myList = [];
 
-// Funções
 
-/* Adicionar to do */
-function saveTodo(text, addToList = true) {
-    const todo = document.createElement("div");
-    todo.classList.add("todo");
 
-    const todoTitle = document.createElement("h3");
-    todoTitle.innerText = text;
-    todo.appendChild(todoTitle);
+function showToDo(){
 
-    const doneBtn = document.createElement("button");
-    doneBtn.classList.add("finish-todo");
-    doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
-    todo.appendChild(doneBtn);
+    let newToDo = '';
 
-    const editBtn = document.createElement("button");
-    editBtn.classList.add("edit-todo");
-    editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
-    todo.appendChild(editBtn);
+    myList.forEach((item, index) => {
+        
+        if(item.text){
+             newToDo =  newToDo + `
+               <div class="todo ${item.done && "done"}">
+                  <h3>${item.text}</h3>
+                  <button class="finish-todo" onclick="finishToDo(${index})"><i class="fa-solid fa-check"></i></button>
+                  <button class="edit-todo" onclick="editToggle(${index})"><i class="fa-solid fa-pen"></i></button>
+                  <button class="remove-todo" onclick="deleteToDo(${index})"><i class="fa-solid fa-xmark"></i></button>
+               </div>
+            `
+        }
+    })
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("remove-todo");
-    deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-    todo.appendChild(deleteBtn);
 
-    todoList.appendChild(todo);
+    toDoListContainer.innerHTML = newToDo; 
 
-    if (addToList) {
-        updateList(text);
-        localStorage.setItem('list', JSON.stringify(myList));
-    }
+    localStorage.setItem('list', JSON.stringify(myList));
 
-    todoInput.value = "";
-    todoInput.focus();
-}
-
-function updateList(item) {
-    myList.push(item);
 }
 
 
-function reloadList() {
 
-    const localStorageList = localStorage.getItem('list');
+function finishToDo(index){
 
-    if (localStorageList) {
-        const loadedList = JSON.parse(localStorageList);
-
-        loadedList.forEach((item) => {
-            saveTodo(item, false);
-        });
-        myList = loadedList;
-    }
+    myList[index].done = !myList[index].done;
+    showToDo();  
 }
 
-
-function toggleForms() {
+function editToggle(index){
     editForm.classList.toggle("hide");
     todoForm.classList.toggle("hide");
-    todoList.classList.toggle("hide");
+    toDoListContainer.classList.toggle("hide");
     toolbar.classList.toggle("hide");
+
+    inputEdit.value = myList[index].text;
+
+    buttonEdit.addEventListener("click", (e) => {
+        e.preventDefault();
+    
+        myList[index].text = inputEdit.value;
+
+        editForm.classList.toggle("hide");
+        todoForm.classList.toggle("hide");
+        toDoListContainer.classList.toggle("hide");
+        toolbar.classList.toggle("hide");
+
+        showToDo();
+    })
 }
 
 
-function updateTodo(text) {
-    const todos = document.querySelectorAll(".todo");
-    todos.forEach((todo) => {
-        let todoTitle = todo.querySelector("h3");
 
-        if (todoTitle.innerText === oldInputValue) {
-            todoTitle.innerText = text;
+function deleteToDo(index){
+    myList.splice(index, 1);
 
-            const index = myList.indexOf(oldInputValue);
-            if (index !== -1) {
-                myList[index] = text;
-                localStorage.setItem('list', JSON.stringify(myList));
-            }
-        }
-    });
+    showToDo();
 }
 
-// Eventos
 
-/* Adicionar to do */
-todoForm.addEventListener("submit", (e) => {
+function localList(){
+    const itemLocalList = localStorage.getItem('list');
+
+    if(itemLocalList){
+        myList = JSON.parse(itemLocalList)
+    }
+
+    showToDo();
+}
+
+localList()
+
+button.addEventListener('click', (e) =>{
     e.preventDefault();
 
-    const inputValue = todoInput.value;
+    if(input.value !== ''){
+        myList.push({
+            text: input.value,
+            done: false
+        });
 
-    if (inputValue) {
-        saveTodo(inputValue);
+        input.value ='';
+        input.focus();
+        showToDo();
+        console.log(myList)
     }
-});
-
-/* Botoes no to do */
-document.addEventListener("click", (e) => {
-    const targetEl = e.target;
-    const parentEl = targetEl.closest("div");
-
-    let todoTitle;
-
-    if (parentEl && parentEl.querySelector("h3")) {
-        todoTitle = parentEl.querySelector("h3").innerText;
-    }
-
-    if (targetEl.classList.contains("finish-todo")) {
-        parentEl.classList.toggle("done");
-    }
-
-    if (targetEl.classList.contains("remove-todo")) {
-        parentEl.remove();
-
-        const index = myList.indexOf(todoTitle);
-        if (index !== -1) {
-            myList.splice(index, 1);
-            localStorage.setItem('list', JSON.stringify(myList));
-            console.log(todoTitle + "foi removido");
-            reloadList()
-        }
-    }
-
-    if (targetEl.classList.contains("edit-todo")) {
-        toggleForms();
-
-        editInput.value = todoTitle;
-        oldInputValue = todoTitle;
-    }
-
-});
-
-
-cancelEditBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    toggleForms();
-});
-
-
-editForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const editInputValue = editInput.value;
-
-    if (editInputValue) {
-        updateTodo(editInputValue);
-    }
-
-    toggleForms();
-});
-
-
-reloadList()
+})

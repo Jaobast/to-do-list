@@ -6,31 +6,29 @@ let myList = [];
 
 
 
-function showToDo() {
+function showToDo(){
 
     let newToDo = '';
-    let hasText = false;
 
     myList.forEach((item, index) => {
-        if (item.text) {
-            hasText = true;
-            newToDo = newToDo + `
-                <div class="todo ${item.done && "done"}">
-                   <h3>${item.text}</h3>
-                   <button class="finish-todo" onclick="finishToDo(${index})"><i class="fa-solid fa-check"></i></button>
-                   <button class="edit-todo"><i class="fa-solid fa-pen"></i></button>
-                   <button class="remove-todo" onclick="deleteToDo(${index})"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            `;
-        }
-    });
-
-
-    if (hasText) {
         
-    }
+        if(item.text){
+             newToDo =  newToDo + `
+               <div class="todo ${item.done && "done"}">
+                  <h3>${item.text}</h3>
+                  <button class="finish-todo" onclick="finishToDo(${index})"><i class="fa-solid fa-check"></i></button>
+                  <button class="edit-todo"><i class="fa-solid fa-pen"></i></button>
+                  <button class="remove-todo" onclick="deleteToDo(${index})"><i class="fa-solid fa-xmark"></i></button>
+               </div>
+            `
+        }
+    })
+
+
+    toDoListContainer.innerHTML = newToDo; 
 
     localStorage.setItem('list', JSON.stringify(myList));
+
 }
 
 
@@ -66,10 +64,10 @@ button.addEventListener('click', (e) =>{
             text: input.value,
             done: false
         });
-    }
 
-    input.value ='';
-    input.focus();
-    showToDo();
-    console.log(myList)
+        input.value ='';
+        input.focus();
+        showToDo();
+        console.log(myList)
+    }
 })
